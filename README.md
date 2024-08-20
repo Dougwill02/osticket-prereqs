@@ -13,111 +13,100 @@ This tutorial outlines the prerequisites and installation of the open-source hel
 
 <h2>Environments and Technologies Used</h2>
 
-- Microsoft Azure (Virtual Machines/Compute)
-- Remote Desktop
-- Internet Information Services (IIS)
+- microsoft azure (virtual machines/compute)
+- remote desktop
+- internet information services (iis)
 
 <h2>Operating Systems Used </h2>
 
 - Windows 10</b> (21H2)
 
-<h2> Prerequisites <h2>
+<h2>Prerequisites<h2>
+   
+- web server:<br />
+- iis (internet information Services) installed on Windows.<p>
+- nPHP:
+- Version 7.3.8 installed. [Download PHP 7.3.8](https://windows.php.net/download/).
 
-<p>1. Web Server:
-   - **IIS (Internet Information Services)** installed on Windows.<p>
-     
-2. PHP:
-   - Version 7.3.8 installed. [Download PHP 7.3.8](https://windows.php.net/download/).
+- PHP Manager for IIS:
+- A tool to manage PHP settings in IIS. [Download PHP Manager for IIS](https://www.iis.net/downloads/microsoft/php-manager).
+- URL Rewrite Module:
+- Required for URL rewriting. [Download URL Rewrite Module](https://www.iis.net/downloads/microsoft/url-rewrite).
 
-3. PHP Manager for IIS:
-   - A tool to manage PHP settings in IIS. [Download PHP Manager for IIS](https://www.iis.net/downloads/microsoft/php-manager).
+- MySQL:
+- Version 5.5.62 installed. [Download MySQL 5.5.62](https://dev.mysql.com/downloads/mysql/5.5.html).
 
-4. URL Rewrite Module:
-   - Required for URL rewriting. [Download URL Rewrite Module](https://www.iis.net/downloads/microsoft/url-rewrite).
+- Database Management Tool:
+- heidisql or another MySQL client to manage your database. [Download HeidiSQL](https://www.heidisql.com/download.php).
 
-5. MySQL:
-   - Version 5.5.62 installed. [Download MySQL 5.5.62](https://dev.mysql.com/downloads/mysql/5.5.html).
+<h2>Installation Steps:<h2>
 
-6. Database Management Tool:
-   - **HeidiSQL** or another MySQL client to manage your database. [Download HeidiSQL](https://www.heidisql.com/download.php).
+<p> 
+ 
+   Create Directory:
+   
+ <img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 
-<h2>Installation Steps/h2>
-
-
-<p>
-<img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-
-extras to add
-
-Before installing osTicket, ensure you have the following:
-
-1. **Web Server**:
-   - **IIS (Internet Information Services)** installed on Windows.
-
-2. **PHP:
-   - Version 7.3.8 installed. [Download PHP 7.3.8](https://windows.php.net/download/).
-
-3. **PHP Manager for IIS**:
-   - A tool to manage PHP settings in IIS. [Download PHP Manager for IIS](https://www.iis.net/downloads/microsoft/php-manager).
-
-4. **URL Rewrite Module**:
-   - Required for URL rewriting. [Download URL Rewrite Module](https://www.iis.net/downloads/microsoft/url-rewrite).
-
-5. **MySQL**:
-   - Version 5.5.62 installed. [Download MySQL 5.5.62](https://dev.mysql.com/downloads/mysql/5.5.html).
-
-6. **Database Management Tool**:
-   - **HeidiSQL** or another MySQL client to manage your database. [Download HeidiSQL](https://www.heidisql.com/download.php).
-
-## Installation Steps
-
-### 1. **Prepare PHP**
-
-1. **Create Directory**:
-   - Create a folder `C:\PHP` on your server.
-
-2. **Download and Install PHP**:
+- Create a folder `C:\PHP` on your server.
+-  **Download and Install PHP**:
    - Download PHP 7.3.8 (e.g., `php-7.3.8-nts-Win32-VC15-x86.zip`).
    - Unzip the downloaded file into `C:\PHP`.
 
-### 2. **Install Required Tools**
+### **Install Required Tools:**
+<img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Disk Sanitization Steps"/> 
 
-1. **Install PHP Manager for IIS**:
+ **Install PHP Manager for IIS**:
    - Run the installer `PHPManagerForIIS_V1.5.0.msi` and follow the prompts.
-
-2. **Install URL Rewrite Module**:
+ **Install URL Rewrite Module**:
    - Run the installer `rewrite_amd64_en-US.msi` and follow the prompts.
 
-### 3. **Set Up MySQL**
+###  **Set Up MySQL**:
 
-1. **Install MySQL**:
+<img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+ 
+ **Install MySQL**:
    - Run the installer `mysql-5.5.62-win32.msi`.
    - Choose “Typical Setup” during installation.
    - Set the root password to `Password1`.
 
-### 4. **Configure IIS**
+### 4. **Configure IIS**:
 
-1. **Open IIS Manager**:
-   - Launch IIS Manager as an administrator.
+<img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+ Open IIS Manager:
 
-2. **Register PHP**:
-   - Use PHP Manager for IIS to register PHP with IIS.
+- Launch IIS Manager as an administrator.
 
-3. **Reload IIS**:
-   - In IIS Manager, restart IIS to apply changes.
+ **Register PHP**:
+ 
+ <img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>   
+ 
+ - Use PHP Manager for IIS to register PHP with IIS.
 
-### 5. **Install osTicket**
+ **Reload IIS**:
 
-1. **Download osTicket**:
+ <img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>   
+ 
+ - In IIS Manager, restart IIS to apply changes.
+
+###  **Install osTicket**
+
+<img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+
+ Download osTicket:
    - Download osTicket version 1.15.8 from the official website or repository.
 
-2. **Extract and Move Files**:
-   - Extract the `upload` folder from the osTicket package.
+ **Extract and Move Files**:
+
+  <img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>   
+  - Extract the `upload` folder from the osTicket package.
    - Copy the `upload` folder to `C:\inetpub\wwwroot`.
    - Rename `upload` to `osTicket`.
 
-3. **Enable PHP Extensions**:
-   - Open IIS Manager.
+ **Enable PHP Extensions**:
+
+ <img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>   
+ 
+ - Open IIS Manager.
    - Navigate to `Sites -> Default -> osTicket`.
    - Double-click “PHP Manager”.
    - Enable the following extensions:
@@ -125,34 +114,41 @@ Before installing osTicket, ensure you have the following:
      - `php_intl.dll`
      - `php_opcache.dll`
 
-4. **Configure osTicket**:
-   - Rename `ost-sampleconfig.php` to `ost-config.php` in `C:\inetpub\wwwroot\osTicket\include`.
+ **Configure osTicket**:
+
+ <img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>   
+ 
+ - Rename `ost-sampleconfig.php` to `ost-config.php` in `C:\inetpub\wwwroot\osTicket\include`.
    - Set file permissions:
      - Disable inheritance and remove all existing permissions.
      - Add new permissions for `Everyone` with `Full Control`.
 
-5. **Set Up osTicket in the Browser**:
-   - Open a web browser and go to `http://localhost/osTicket`.
+ **Set Up osTicket in the Browser**:
+
+ <img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>  
+ 
+ - Open a web browser and go to `http://localhost/osTicket`.
    - Click “Continue”.
    - Enter the Helpdesk name and default email address.
 
-### 6. **Create and Configure Database**
+### Create and Configure Database
 
-1. **Open HeidiSQL**:
+<img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+ **Open HeidiSQL**:
    - Create a new session with username `root` and password `Password1`.
    - Connect and create a new database named `osTicket`.
 
-2. **Complete Installation**:
-   - Return to the osTicket setup page in your browser.
+ **Complete Installation**:
+
+ <img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>   
+ 
+ - Return to the osTicket setup page in your browser.
    - Enter the MySQL database details:
      - **Database Name**: osTicket
      - **Username**: root
      - **Password**: Password1
-   - Click “Install Now!” to complete the installation.
+     - 
+     - <img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+     - Click “Install Now!” to complete the installation.
 
 ---
-
-This guide provides clear, actionable steps that anyone can follow to install osTicket. It covers all necessary prerequisites and walks through each part of the installation process, ensuring that even users with limited experience can successfully set up osTicket.
-
-
-
