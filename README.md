@@ -146,10 +146,7 @@ After installation, configure osTicket through the admin panel. Important settin
   ```bash
   tail -f /var/log/apache2/osticket_error.log
   ```
-
-## Additional Resources
-- [osTicket Documentation](https://osticket.com/docs/)
-- [osTicket GitHub Repository](https://github.com/osTicket/osTicket)
+:)
 
 
 
