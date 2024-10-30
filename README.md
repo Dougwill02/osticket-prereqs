@@ -17,138 +17,139 @@ This tutorial outlines the prerequisites and installation of the open-source hel
 - remote desktop
 - internet information services (iis)
 
-<h2>Operating Systems Used </h2>
+# osTicket Installation Guide
 
-- Windows 10</b> (21H2)
+## Overview
+osTicket is an open-source support ticket system that helps organizations manage customer inquiries efficiently. This guide provides detailed prerequisites and step-by-step installation instructions.
 
-<h2>Prerequisites<h2>
-   
-- web server:<br />
-- iis (internet information Services) installed on Windows.<p>
-- nPHP:
-- Version 7.3.8 installed. [Download PHP 7.3.8](https://windows.php.net/download/).
+## Table of Contents
+- [Prerequisites](#prerequisites)
+- [Installation Steps](#installation-steps)
+- [Configuration](#configuration)
+- [Key Features](#key-features)
+- [Troubleshooting](#troubleshooting)
+- [Additional Resources](#additional-resources)
 
-- PHP Manager for IIS:
-- A tool to manage PHP settings in IIS. [Download PHP Manager for IIS](https://www.iis.net/downloads/microsoft/php-manager).
-- URL Rewrite Module:
-- Required for URL rewriting. [Download URL Rewrite Module](https://www.iis.net/downloads/microsoft/url-rewrite).
 
-- MySQL:
-- Version 5.5.62 installed. [Download MySQL 5.5.62](https://dev.mysql.com/downloads/mysql/5.5.html).
+## Prerequisites
+Before installing osTicket, ensure your server meets the following requirements:
 
-- Database Management Tool:
-- heidisql or another MySQL client to manage your database. [Download HeidiSQL](https://www.heidisql.com/download.php).
+### System Requirements
+- **Operating System**: Ubuntu 20.04 or later (similar steps apply for other Linux distributions)
+- **Web Server**: Apache or Nginx
+- **PHP**: Version 7.2 or higher
+  - Required PHP extensions:
+    - `php-mysql`
+    - `php-xml`
+    - `php-mbstring`
+    - `php-zip`
+- **Database**: MySQL version 5.5 or higher
 
-<h2>Installation Steps:<h2>
+### Installing Prerequisites
+Run the following commands to install the necessary packages on an Ubuntu server:
 
-<p> 
- 
-   Create Directory:
-   
- <img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+```bash
+sudo apt update
+sudo apt install apache2 php libapache2-mod-php php-mysql php-xml php-mbstring php-zip mysql-server wget unzip
+```
 
-- Create a folder `C:\PHP` on your server.
--  **Download and Install PHP**:
-   - Download PHP 7.3.8 (e.g., `php-7.3.8-nts-Win32-VC15-x86.zip`).
-   - Unzip the downloaded file into `C:\PHP`.
+## Installation Steps
 
-### **Install Required Tools:**
-<img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Disk Sanitization Steps"/> 
+### Step 1: Download osTicket
+1. Navigate to the web server's root directory:
+   ```bash
+   cd /var/www/html
+   ```
+2. Download the latest version of osTicket:
+   ```bash
+   wget https://github.com/osTicket/osTicket/releases/download/v1.15.4/osTicket-v1.15.4.zip
+   ```
+3. Unzip the downloaded file and rename the directory:
+   ```bash
+   unzip osTicket-v1.15.4.zip
+   mv upload osTicket
+   ```
 
- **Install PHP Manager for IIS**:
-   - Run the installer `PHPManagerForIIS_V1.5.0.msi` and follow the prompts.
- **Install URL Rewrite Module**:
-   - Run the installer `rewrite_amd64_en-US.msi` and follow the prompts.
+### Step 2: Set Directory Permissions
+Set the appropriate permissions for the osTicket directory:
+```bash
+sudo chown -R www-data:www-data /var/www/html/osTicket
+sudo chmod -R 755 /var/www/html/osTicket
+```
 
-###  **Set Up MySQL**:
+### Step 3: Create a Database
+1. Log into the MySQL server:
+   ```bash
+   mysql -u root -p
+   ```
+2. Create a database and user for osTicket:
+   ```sql
+   CREATE DATABASE osticket;
+   CREATE USER 'osticketuser'@'localhost' IDENTIFIED BY 'your_password';
+   GRANT ALL PRIVILEGES ON osticket.* TO 'osticketuser'@'localhost';
+   FLUSH PRIVILEGES;
+   EXIT;
+   ```
 
-<img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
- 
- **Install MySQL**:
-   - Run the installer `mysql-5.5.62-win32.msi`.
-   - Choose “Typical Setup” during installation.
-   - Set the root password to `Password1`.
+### Step 4: Configure Apache
+Create a new configuration file for osTicket:
+```bash
+sudo nano /etc/apache2/sites-available/osticket.conf
+```
+Add the following configuration (adjust `ServerName` as necessary):
+```apache
+<VirtualHost *:80>
+    ServerName your-domain.com
+    DocumentRoot /var/www/html/osTicket
 
-### 4. **Configure IIS**:
+    <Directory /var/www/html/osTicket>
+        AllowOverride All
+    </Directory>
 
-<img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
- Open IIS Manager:
+    ErrorLog ${APACHE_LOG_DIR}/osticket_error.log
+    CustomLog ${APACHE_LOG_DIR}/osticket_access.log combined
+</VirtualHost>
+```
+Enable the new site and rewrite module:
+```bash
+sudo a2ensite osticket
+sudo a2enmod rewrite
+sudo systemctl restart apache2
+```
 
-- Launch IIS Manager as an administrator.
+### Step 5: Complete the Web Installation
+1. Open your web browser and navigate to `http://your-domain.com`.
+2. Follow the on-screen instructions to complete the osTicket setup:
+   - Input database details (database name, user, password).
+   - Set up your admin account.
+3. Once installation is complete, delete the setup directory for security:
+   ```bash
+   sudo rm -rf /var/www/html/osTicket/setup/
+   ```
 
- **Register PHP**:
- 
- <img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>   
- 
- - Use PHP Manager for IIS to register PHP with IIS.
+## Configuration
+After installation, configure osTicket through the admin panel. Important settings include:
+- Email settings for ticket notifications.
+- Department setup for managing inquiries.
+- Customization of fields and forms as needed.
 
- **Reload IIS**:
+## Key Features
+- **Ticket Management**: Easily track and manage customer inquiries.
+- **Email Integration**: Automatically convert emails to tickets.
+- **Customizable Help Topics**: Tailor support requests to your needs.
+- **User Portal**: A user-friendly interface for customers to submit and track tickets.
 
- <img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>   
- 
- - In IIS Manager, restart IIS to apply changes.
+## Troubleshooting
+- **Common Issues**: If you encounter issues, check the permissions and ensure all prerequisites are installed.
+- **Database Connection Errors**: Double-check the database credentials and MySQL service status.
+- **Logs**: Check Apache logs for errors:
+  ```bash
+  tail -f /var/log/apache2/osticket_error.log
+  ```
 
-###  **Install osTicket**
+## Additional Resources
+- [osTicket Documentation](https://osticket.com/docs/)
+- [osTicket GitHub Repository](https://github.com/osTicket/osTicket)
 
-<img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 
- Download osTicket:
-   - Download osTicket version 1.15.8 from the official website or repository.
 
- **Extract and Move Files**:
-
-  <img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>   
-  - Extract the `upload` folder from the osTicket package.
-   - Copy the `upload` folder to `C:\inetpub\wwwroot`.
-   - Rename `upload` to `osTicket`.
-
- **Enable PHP Extensions**:
-
- <img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>   
- 
- - Open IIS Manager.
-   - Navigate to `Sites -> Default -> osTicket`.
-   - Double-click “PHP Manager”.
-   - Enable the following extensions:
-     - `php_imap.dll`
-     - `php_intl.dll`
-     - `php_opcache.dll`
-
- **Configure osTicket**:
-
- <img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>   
- 
- - Rename `ost-sampleconfig.php` to `ost-config.php` in `C:\inetpub\wwwroot\osTicket\include`.
-   - Set file permissions:
-     - Disable inheritance and remove all existing permissions.
-     - Add new permissions for `Everyone` with `Full Control`.
-
- **Set Up osTicket in the Browser**:
-
- <img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>  
- 
- - Open a web browser and go to `http://localhost/osTicket`.
-   - Click “Continue”.
-   - Enter the Helpdesk name and default email address.
-
-### Create and Configure Database
-
-<img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
- **Open HeidiSQL**:
-   - Create a new session with username `root` and password `Password1`.
-   - Connect and create a new database named `osTicket`.
-
- **Complete Installation**:
-
- <img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>   
- 
- - Return to the osTicket setup page in your browser.
-   - Enter the MySQL database details:
-     - **Database Name**: osTicket
-     - **Username**: root
-     - **Password**: Password1
-     - 
-     - <img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-     - Click “Install Now!” to complete the installation.
-
----
